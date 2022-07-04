@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from "vue";
+
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 </script>
@@ -12,7 +14,7 @@
           <div class="hidden md:flex md:gap-x-6">
             <router-link
               class="inline-block rounded-lg py-1 px-2 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900"
-              to="/Home"
+              to="/"
               >Home</router-link
             >
             <router-link
