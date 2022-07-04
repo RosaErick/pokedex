@@ -25,11 +25,13 @@ const selectPokemon = (pokemon: any) => {
   });
 };
 
+
 const filterPokemonsComputed = computed(() => {
   return pokemons.value.filter((pokemon: any) => {
     return pokemon.name.toLowerCase().includes(search.value.toLowerCase());
   });
 });
+
 
 onMounted(() => {
   getPokemons();
@@ -38,7 +40,12 @@ onMounted(() => {
 
 <template>
   <div class="bg-slate-500">
-    <input type="text" v-model="search" />
+  
+<input
+type="text"
+v-model="search"
+
+>
 
     <ul class="grid grid-cols-1 gap-5">
       <li
@@ -52,29 +59,29 @@ onMounted(() => {
         </p>
       </li>
     </ul>
+
   </div>
 
-  <!-- render search results !--->
+<!-- render search results !--->
 
-  <div class="container pokemons">
-    <div
-      class="pokemon"
-      :key="pokemon.name"
-      v-for="pokemon in filterPokemonsComputed"
-    >
-      <div class="pokemon-name">
+<div class="container pokemons">
+
+    <div class="pokemon" :key="pokemon.name" v-for="pokemon in filterPokemonsComputed">
+        <div class="pokemon-name">
         {{ pokemon.name }}
-      </div>
-      <div class="pokemon-image">
-        <img
-          :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.name}.png`"
-        />
-      </div>
-      <div class="pokemon-info">
+        </div>
+        <div class="pokemon-image">
+        <img :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.name}.png`" />
+        </div>
+        <div class="pokemon-info">
         <button @click="selectPokemon(pokemon)">More info</button>
-      </div>
+        </div>
     </div>
-  </div>
+
+
+</div>
+
+
 </template>
 
 <style></style>
