@@ -7,6 +7,7 @@ const search = ref("");
 const laoding = ref(true);
 const loadingSelectedPokemons = ref(true);
 const selectedPokemon = ref(null);
+const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
 const getPokemons = async () => {
   const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
@@ -16,15 +17,30 @@ const getPokemons = async () => {
   laoding.value = false;
   //add image to each pokemon
 
-  pokemons.value.forEach((pokemon: { url: any; image: any }) => {
+  getPokemonImages(pokemons.value);
+
+  console.log(pokemons.value);
+};
+
+const getPokemonImages = (pokemons: any) => {
+  pokemons.forEach((pokemon: { url: any; image: any }) => {
     fetch(pokemon.url)
       .then((response) => response.json())
       .then((data) => {
         pokemon.image = data.sprites.front_default;
       });
   });
+};
 
-  console.log(pokemons.value);
+const loadMorePokemons = async () => {
+  const response = await fetch(
+    `https://pokeapi.co/api/v2/pokemon?limit=151&offset=${pokemons.value.length}`
+  );
+  const data = await response.json();
+  const newPokemons = data.results;
+  pokemons.value = [...pokemons.value, ...newPokemons];
+
+  getPokemonImages(pokemons.value);
 };
 
 const filterPokemonsComputed = computed(() => {
@@ -58,10 +74,20 @@ onMounted(() => {
       >
         <img :src="pokemon.image" class="h-24 w-24 rounded-full" />
         <p class="text-sm text-slate-700">
-          {{ pokemon.name }}
+          {{ capitalize(pokemon.name) }}
         </p>
       </li>
     </ul>
+  </div>
+
+  <div class="container">
+    button to load more pokemons
+    <button
+      @click="loadMorePokemons"
+      class="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded"
+    >
+      Load more pokemons
+    </button>
   </div>
 
   <!-- render search results !--->
