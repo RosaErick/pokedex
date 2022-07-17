@@ -10,7 +10,7 @@ const pokemons = reactive(ref());
 const search = ref("");
 const laoding = ref(true);
 const loadingSelectedPokemons = ref(true);
-const selectedPokemon = reactive(ref(null));
+const selectedPokemon = reactive(ref());
 
 const searchResponses = ref("");
 
